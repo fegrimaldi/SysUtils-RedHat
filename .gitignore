@@ -135,3 +135,6 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+# User Defined
+Miniconda3-latest-Linux-x86_64.sh
