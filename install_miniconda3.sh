@@ -13,8 +13,8 @@ printf "${YELLOW}Installing Miniconda to /usr/share/miniconda3.${END_COLOR}\n"
 sudo ./Miniconda3-latest-Linux-x86_64.sh -b -p /usr/share/miniconda3 && \
 
 printf "${YELLOW}Modifying permissions on /usr/share/miniconda3.${END_COLOR}\n"
-sudo chown root:webdevs -R /usr/share/miniconda3
-sudo chmod 775 -R /usr/share/miniconda3
+sudo chown root:webdevs -R /usr/share/miniconda3 && \
+sudo chmod 775 -R /usr/share/miniconda3 && \
 
 printf "${YELLOW}Activating Miniconda3.${END_COLOR}\n"
 source /usr/share/miniconda3/bin/activate && \
