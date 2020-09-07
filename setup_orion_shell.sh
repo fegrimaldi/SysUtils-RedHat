@@ -87,10 +87,11 @@ echo export EDITOR=nano >> ~/.zshrc && \
 # URL: https://docs.conda.io/en/latest/miniconda.html
 # curl --insecure --proxy <proxy_address>:<port> -Lo Miniconda3-latest-Linux-x86_64.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
 curl -Lo Miniconda3-latest-Linux-x86_64.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-chmod +x ~/Miniconda3-latest-Linux-x86_64.sh && \
+chmod +x Miniconda3-latest-Linux-x86_64.sh && \
 
 # Changes default shell to zsh
+printf "${YELLOW}"
 chsh -s /usr/bin/zsh
-printf "${YELLOW}Congratulations! Your Orion Shell Environment is now installed.${END_COLOR}\n"
-printf "${YEllOW}Install miniconda python by running Miniconda3-latest-Linux-x86_64.sh.${END_COLOR}\n"
-printf "${YELLOW}Log out and log back in to activate the shell.${END_COLOR}\n"
+printf "${CYAN}Congratulations! Your Orion Shell Environment is now installed.${END_COLOR}\n"
+printf "${YELLOW}Install miniconda python by running Miniconda3-latest-Linux-x86_64.sh.${END_COLOR}\n"
+printf "${CYAN}Log out and log back in to activate the shell.${END_COLOR}\n"

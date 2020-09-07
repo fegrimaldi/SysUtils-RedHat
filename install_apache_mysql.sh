@@ -21,7 +21,7 @@ sudo systemctl enable mariadb
 sudo systemctl start mariadb
 
 # Add ports to FireWall Allow list
-printf "${YELLOW}Adding Web and DB Services to Firewall Allowed List.\n"
+printf "${YELLOW}Adding Web and DB Services to Firewall Allowed List.${END_COLOR}\n"
 ACTIVE_ZONE=$(sudo  firewall-cmd --get-active-zone | head -n1 | sed -e 's/\s.*$//')
 sudo firewall-cmd --zone=$ACTIVE_ZONE --add-service=http --permanent
 sudo firewall-cmd --zone=$ACTIVE_ZONE --add-service=https  --permanent
@@ -30,7 +30,7 @@ sudo firewall-cmd --reload
 
 
 # Create Web Server Administrator and Developer Groups
-printf "${YELLOW}Creating Groups and Adding default Users.\n"
+printf "${YELLOW}Creating Groups and Adding default Users.${END_COLOR}\n"
 sudo groupadd webadmins
 sudo groupadd webdevs
 
@@ -43,7 +43,7 @@ sudo usermod -a -G webdevs root
 sudo usermod -a -G webdevs $USER
 sudo usermod -a -G webdevs apache
 
-printf "${YELLOW}Setting Up Web Directories"
+printf "${YELLOW}Setting Up Web Directories.${END_COLOR}\n"
 # Set Permissions on httpd base directories
 if [ ! -d /var/www/html ]; then
     sudo mkdir -p /var/www/html
@@ -64,20 +64,20 @@ IS_REWRITE_LOADED=$(sudo httpd -M | grep -i rewrite)
 IS_H2_LOADED=$(sudo httpd -M | grep -i http2)
 
 if  [ IS_SSL_LOADED ] ; then
-    printf "${YELLOW}SSL Module is enabled.\n"
+    printf "${YELLOW}SSL Module is enabled.${END_COLOR}\n"
 else
-    printf "${RED}Note: SSL Module is not enabled.\n"
+    printf "${RED}Note: SSL Module is not enabled.${END_COLOR}\n"
 fi
 
 if  [ IS_REWRITE_LOADED ] ; then
-    printf "${YELLOW}Rewrite Module is enabled.\n"
+    printf "${YELLOW}Rewrite Module is enabled.${END_COLOR}\n"
 else
-    printf "${RED}Note: Rewrite Module is not enabled.\n"
+    printf "${RED}Note: Rewrite Module is not enabled.${END_COLOR}\n"
 fi
 
 if  [ IS_H2_LOADED ] ; then
-    printf "${YELLOW}HTTP2 Module is enabled.\n"
+    printf "${YELLOW}HTTP2 Module is enabled.${END_COLOR}\n"
 else
-    printf "${RED}Note: HTTP2 Module is not enabled.\n"
+    printf "${RED}Note: HTTP2 Module is not enabled.${END_COLOR}\n"
 fi
 
