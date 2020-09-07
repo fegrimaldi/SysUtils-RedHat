@@ -90,6 +90,7 @@ curl -Lo Miniconda3-latest-Linux-x86_64.sh https://repo.anaconda.com/miniconda/M
 chmod +x Miniconda3-latest-Linux-x86_64.sh && \
 
 # Changes default shell to zsh
+printf "${Yellow}Changing default Shell for $USER.${END_COLOR}\n"
 printf "${YELLOW}"
 chsh -s /usr/bin/zsh
 printf "${CYAN}Congratulations! Your Orion Shell Environment is now installed.${END_COLOR}\n"

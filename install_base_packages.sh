@@ -27,5 +27,8 @@ sudo ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa && \
 sudo ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N '' -t dsa && \
 sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N '' -t ecdsa -b 521 && \
 
+printf "${YELLOW}Generating SSH Keys for User: $USER.${END_COLOR}\n"
+ssh-keygen
+
 printf "${RED}It is recommend that you reboot the system now.${END_COLOR}\n"
-printf "${Yellow}Remember to run ssh-keygen -R %hostname% on your workstation before connecting via ssh again.${END_COLOR}\n"
+printf "${Yellow}Remember to run ssh-keygen -R <hostname> on your workstation before connecting via ssh again.${END_COLOR}\n"

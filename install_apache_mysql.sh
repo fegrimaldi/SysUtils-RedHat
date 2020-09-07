@@ -33,9 +33,6 @@ sudo firewall-cmd --zone=$ACTIVE_ZONE --add-service=mysql --permanent
 sudo firewall-cmd --reload
 printf "${END_COLOR}"
 
-# Copy httpd conf files
-printf "${YELLOW}Copy Additional Apache Configs.${END_COLOR}\n"
-sudo cp httpd_config/security.conf /etc/httpd/conf.d/
 
 # Create Web Server Administrator and Developer Groups
 printf "${YELLOW}Creating Groups and Adding default Users.${END_COLOR}\n"
@@ -60,7 +57,6 @@ if [ ! -d /var/www/html ]; then
     sudo chmod 644 -R /var/www
 fi
 
-
 # Create Apache Directories
 if [ -d /etc/httpd ]; then
     sudo mkdir -p /etc/httpd/ssl/private
@@ -73,6 +69,12 @@ fi
 
 if [ ! -d /etc/httpd/sites-enabled ]; then
     sudo mkdir -p /etc/httpd/sites-enabled
+fi
+
+    # Copy httpd conf files
+if [ -d /etc/httpd/conf.d ]; then
+    printf "${YELLOW}Copy Additional Apache Configs.${END_COLOR}\n"
+    sudo cp httpd_config/security.conf /etc/httpd/conf.d/
 fi
 
 # Reset Permissions
