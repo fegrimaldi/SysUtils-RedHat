@@ -33,6 +33,9 @@ sudo firewall-cmd --zone=$ACTIVE_ZONE --add-service=mysql --permanent
 sudo firewall-cmd --reload
 printf "${END_COLOR}"
 
+# Copy httpd conf files
+printf "${YELLOW}Copy Additional Apache Configs.${END_COLOR}\n"
+sudo cp httpd_config/security.conf /etc/httpd/conf.d/
 
 # Create Web Server Administrator and Developer Groups
 printf "${YELLOW}Creating Groups and Adding default Users.${END_COLOR}\n"
@@ -58,12 +61,23 @@ if [ ! -d /var/www/html ]; then
 fi
 
 
+# Create Apache Directories
 if [ -d /etc/httpd ]; then
     sudo mkdir -p /etc/httpd/ssl/private
     sudo cp openssl.conf /etc/httpd/ssl/
-    sudo chown root:webadmins -R /etc/httpd
-    sudo chmod g+w -R /etc/httpd
 fi
+
+if [ ! -d /etc/httpd/sites-available ]; then
+    sudo mkdir -p /etc/httpd/sites-available
+fi
+
+if [ ! -d /etc/httpd/sites-enabled ]; then
+    sudo mkdir -p /etc/httpd/sites-enabled
+fi
+
+# Reset Permissions
+sudo chown root:webadmins -R /etc/httpd
+sudo chmod g+w -R /etc/httpd
 
 IS_SSL_LOADED=$(sudo httpd -M | grep -i ssl)
 IS_REWRITE_LOADED=$(sudo httpd -M | grep -i rewrite)
@@ -87,3 +101,4 @@ else
     printf "${RED}Note: HTTP2 Module is not enabled.${END_COLOR}\n"
 fi
 
+printf "${YELLOW}Modifications have been made to groups and permissions. Log off, then back on before proceeding.${END_COLOR}\n"
