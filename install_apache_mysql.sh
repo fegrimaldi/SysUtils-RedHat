@@ -45,14 +45,13 @@ sudo usermod -a -G webdevs apache
 
 printf "${YELLOW}Setting Up Web Directories"
 # Set Permissions on httpd base directories
-if [ ! -d /var/www ]; then
+if [ ! -d /var/www/html ]; then
     sudo mkdir -p /var/www/html
+    sudo cp html/* /var/www/html/
     sudo chown root:webdevs -R /var/www
-    sudo chmod g+w -R /var/www
+    sudo chmod 644 -R /var/www
 fi
 
-sudo chown apache:webdevs -R /var/www
-sudo chmod 664 -R /var/www
 
 if [ -d /etc/httpd ]; then
     sudo mkdir -p /etc/httpd/ssl/private
@@ -81,3 +80,4 @@ if  [ IS_H2_LOADED ] ; then
 else
     printf "${RED}Note: HTTP2 Module is not enabled.\n"
 fi
+
