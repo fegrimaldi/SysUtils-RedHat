@@ -21,12 +21,17 @@ sudo systemctl enable mariadb
 sudo systemctl start mariadb
 
 # Add ports to FireWall Allow list
-printf "${YELLOW}Adding Web and DB Services to Firewall Allowed List.${END_COLOR}\n"
+printf "${YELLOW}"
+printf "dding Web and DB Services to Firewall Allowed List.\n"
 ACTIVE_ZONE=$(sudo  firewall-cmd --get-active-zone | head -n1 | sed -e 's/\s.*$//')
+printf "Adding HTTP Protocol TCP Port 80"
 sudo firewall-cmd --zone=$ACTIVE_ZONE --add-service=http --permanent
+printf "Adding HTTPS Protocol TCP Port 443 .\n"
 sudo firewall-cmd --zone=$ACTIVE_ZONE --add-service=https  --permanent
+printf "Adding MySQL Server TCP Port 3306.\n"
 sudo firewall-cmd --zone=$ACTIVE_ZONE --add-service=mysql --permanent
 sudo firewall-cmd --reload
+printf "${END_COLOR}"
 
 
 # Create Web Server Administrator and Developer Groups
