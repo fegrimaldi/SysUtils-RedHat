@@ -1,0 +1,9 @@
+pytz
+datetime
+tzlocal
+colorama
+ipython
+mysqlclient
+mysql-connector-python
+pylint
+autopep8
