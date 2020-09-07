@@ -55,6 +55,7 @@ fi
 
 if [ -d /etc/httpd ]; then
     sudo mkdir -p /etc/httpd/ssl/private
+    sudo cp openssl.conf /etc/httpd/ssl/
     sudo chown root:webadmins -R /etc/httpd
     sudo chmod g+w -R /etc/httpd
 fi
