@@ -52,18 +52,18 @@ printf "${YELLOW}Setting Up Web Directories.${END_COLOR}\n"
 # Set Permissions on httpd base directories
 if [ ! -d /var/www/html ]; then
     sudo mkdir -p /var/www/html
-    sudo mkdir -p /var/www/webapps/default
-    sudo cp httpd_config/html/index.html /var/www/html/
-    sudo cp httpd_config/html/wsgi_test.py /var/www/webapps/default/
-    sudo chown root:webdevs -R /var/www
-    sudo chmod g+w -R /var/www
 fi
+sudo mkdir -p /var/www/webapps/default
+sudo cp httpd_config/html/index.html /var/www/html/
+sudo cp httpd_config/html/wsgi_test.py /var/www/webapps/default/
+sudo chown root:webdevs -R /var/www
+sudo chmod g+w -R /var/www
 
 # Create PKI Directories Directories and copy openssl.conf
 if [ -d /etc/httpd ]; then
     sudo mkdir -p /etc/httpd/pki/ssl/private
 fi
-sudo cp httpd/openssl.conf gen_csr.sh gen_self_signed_cert.sh /etc/httpd/pki/ssl/
+sudo cp httpd_config/openssl.conf httpd_config/gen_csr.sh httpd_config/gen_self_signed_cert.sh /etc/httpd/pki/ssl/
 
 # Creates sites-available if no present and copys default virtual hosts
 if [ ! -d /etc/httpd/sites-available ]; then

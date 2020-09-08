@@ -7,7 +7,7 @@ CYAN='\e[0;36m'
 LIGHT_GRAY='\e[0;37m'
 END_COLOR='\e[0m'
 
-SSL_DIR="/etc/httpd/ssl"
+SSL_DIR="/etc/httpd/pki/ssl"
 OPENSSL_CMD="/usr/bin/openssl"
 
 if [ "$1" == "" || "$1" == "--help" ]; then
@@ -15,10 +15,11 @@ if [ "$1" == "" || "$1" == "--help" ]; then
     printf "${YELLOW}Ex: gen_self_signed_cert.sh my_cert ${END_COLOR}\n"
     exit 1
 else
-    sudo ${OPENSSL_CMD} req -x509 -newkey rsa:2048 -keyout $SSL_DIR/private/"$1" .key -nodes -out $SSL_DIR/"$1".cer -days 365 -config $SSL_DIR/openssl.conf
+    CERT_NAME=$1
+    sudo ${OPENSSL_CMD} req -x509 -newkey rsa:2048 -keyout $SSL_DIR/private/$CERT_NAME.key -nodes -out $SSL_DIR/$CERT_NAME.cer -days 365 -config $SSL_DIR/openssl.conf
 fi
 
 printf "${YELLOW}Resetting Permissions.${END_COLOR}\n"
 sudo chown root:webadmins -R /etc/httpd/ssl
-sudo chmod 664 $SSL_DIR/"$1".cer
-sudo chmod 664 $SSL_DIR/private/"$1".key
+# sudo chmod 664 $SSL_DIR/"$1".cer
+# sudo chmod 664 $SSL_DIR/private/"$1".key
