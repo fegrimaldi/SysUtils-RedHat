@@ -137,4 +137,4 @@ dmypy.json
 cython_debug/
 
 # User Defined
-Miniconda3-latest-Linux-x86_64.sh
+python/Miniconda3-latest-Linux-x86_64.sh

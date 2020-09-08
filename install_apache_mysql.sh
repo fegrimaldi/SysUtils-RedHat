@@ -14,19 +14,19 @@ else
 fi
 
 # Install required packages, enable, and start servivces
-sudo ${INSTALL_CMD} install httpd httpd-devel mod_ssl mariadb-server mariadb-devel -y
-sudo  systemctl enable httpd
-sudo systemctl start httpd
+printf "${YELLOW}Installing Apache and MySQL Packages and Enabling services.${END_COLOR}\n"
+sudo ${INSTALL_CMD} install httpd httpd-devel mod_ssl mariadb-server mariadb-devel mod_security_crs -y
+sudo systemctl enable httpd
 sudo systemctl enable mariadb
-sudo systemctl start mariadb
+
 
 # Add ports to FireWall Allow list
 printf "${YELLOW}"
-printf "dding Web and DB Services to Firewall Allowed List.\n"
+printf "Adding Web and DB Services to Firewall Allowed List.\n"
 ACTIVE_ZONE=$(sudo  firewall-cmd --get-active-zone | head -n1 | sed -e 's/\s.*$//')
-printf "Adding HTTP Protocol TCP Port 80"
+printf "Adding HTTP Protocol TCP Port 80.\n"
 sudo firewall-cmd --zone=$ACTIVE_ZONE --add-service=http --permanent
-printf "Adding HTTPS Protocol TCP Port 443 .\n"
+printf "Adding HTTPS Protocol TCP Port 443.\n"
 sudo firewall-cmd --zone=$ACTIVE_ZONE --add-service=https  --permanent
 printf "Adding MySQL Server TCP Port 3306.\n"
 sudo firewall-cmd --zone=$ACTIVE_ZONE --add-service=mysql --permanent
@@ -52,24 +52,32 @@ printf "${YELLOW}Setting Up Web Directories.${END_COLOR}\n"
 # Set Permissions on httpd base directories
 if [ ! -d /var/www/html ]; then
     sudo mkdir -p /var/www/html
-    sudo cp html/* /var/www/html/
+    sudo mkdir -p /var/www/webapps/default
+    sudo cp httpd_config/html/index.html /var/www/html/
+    sudo cp httpd_config/html/wsgi_test.py /var/www/webapps/default/
     sudo chown root:webdevs -R /var/www
-    sudo chmod 644 -R /var/www
+    sudo chmod g+w -R /var/www
 fi
 
-# Create Apache Directories
+# Create PKI Directories Directories
 if [ -d /etc/httpd ]; then
-    sudo mkdir -p /etc/httpd/ssl/private
-    sudo cp openssl.conf /etc/httpd/ssl/
+    sudo mkdir -p /etc/httpd/pki/ssl/private
 fi
+
+sudo cp httpd/openssl.conf gen_csr.sh gen_self_signed_cert.sh /etc/httpd/pki/ssl/
+
 
 if [ ! -d /etc/httpd/sites-available ]; then
     sudo mkdir -p /etc/httpd/sites-available
 fi
 
+sudo cp httpd_config/00-default.conf 00-default-ssl.conf /etc/httpd/sites-available/
+
 if [ ! -d /etc/httpd/sites-enabled ]; then
     sudo mkdir -p /etc/httpd/sites-enabled
 fi
+sudo ln -s /etc/httpd/sites-available/00-default.conf /etc/httpd/sites-enabled/default.conf
+sudo ln -s /etc/httpd/sites-available/00-default-ssl.conf /etc/httpd/sites-enabled/default-ssl.conf
 
     # Copy httpd conf files
 if [ -d /etc/httpd/conf.d ]; then
@@ -77,13 +85,26 @@ if [ -d /etc/httpd/conf.d ]; then
     sudo cp httpd_config/security.conf /etc/httpd/conf.d/
 fi
 
+# Configure mod_security_crs
+printf "${YELLOW}Configuring Mod Security OWASP Core Rule Set.${END_COLOR}\n"
+if [ -d /etc/httpd/modsecurity.d/activated_rules ]; then
+cp httpd_config/test_rule.conf /etc/httpd/modsecurity.d/activated_rules/
+
+fi
+
 # Reset Permissions
+printf "${YELLOW}Resetting Permissions on directories...${END_COLOR}\n"
 sudo chown root:webadmins -R /etc/httpd
 sudo chmod g+w -R /etc/httpd
+
+printf "${YELLOW}Starting Apache and MySQL Services.${END_COLOR}\n"
+sudo systemctl start mariadb
+sudo systemctl start httpd
 
 IS_SSL_LOADED=$(sudo httpd -M | grep -i ssl)
 IS_REWRITE_LOADED=$(sudo httpd -M | grep -i rewrite)
 IS_H2_LOADED=$(sudo httpd -M | grep -i http2)
+
 
 if  [ IS_SSL_LOADED ] ; then
     printf "${YELLOW}SSL Module is enabled.${END_COLOR}\n"
@@ -103,4 +124,6 @@ else
     printf "${RED}Note: HTTP2 Module is not enabled.${END_COLOR}\n"
 fi
 
-printf "${YELLOW}Modifications have been made to groups and permissions. Log off, then back on before proceeding.${END_COLOR}\n"
+
+
+printf "${RED}Modifications have been made to groups and permissions. Log off, then back on before proceeding.${END_COLOR}\n"

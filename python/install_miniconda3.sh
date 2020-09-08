@@ -14,7 +14,7 @@ sudo ./Miniconda3-latest-Linux-x86_64.sh -b -p /usr/share/miniconda3 && \
 
 printf "${YELLOW}Modifying permissions on /usr/share/miniconda3.${END_COLOR}\n"
 sudo chown root:webdevs -R /usr/share/miniconda3 && \
-sudo chmod 775 -R /usr/share/miniconda3 && \
+sudo chmod g+w -R /usr/share/miniconda3 && \
 
 if [ -w /usr/share/miniconda3 ]; then
     printf "${YELLOW} Directory is writeable by current process. Proceeding...${END_COLOR}\n"
@@ -40,4 +40,4 @@ conda create -n apache-wsgi --clone base && \
 
 printf "${YELLOW}Activating apache-wsgi and installing Django WSGI Modules.${END_COLOR}\n"
 conda activate apache-wsgi && \
-pip install -r django_reqs.txt && \
+pip install -r django_reqs.txt

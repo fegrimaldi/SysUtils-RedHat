@@ -51,7 +51,7 @@ for type in Bold Light Medium Regular Retina; do
 	echo "Found existing file $FILE_PATH"
     fi;
 done
-echo "fc-cache -f"
+printf "${YELLOW}Updating Fonts Cache...${END_COLOR}"
 fc-cache -f
 
 # Install oh-my-zsh
@@ -86,13 +86,13 @@ echo export EDITOR=nano >> ~/.zshrc && \
 # Download miniconda python installation script
 # URL: https://docs.conda.io/en/latest/miniconda.html
 # curl --insecure --proxy <proxy_address>:<port> -Lo Miniconda3-latest-Linux-x86_64.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-curl -Lo Miniconda3-latest-Linux-x86_64.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-chmod +x Miniconda3-latest-Linux-x86_64.sh && \
+curl -Lo python/Miniconda3-latest-Linux-x86_64.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+chmod +x python/Miniconda3-latest-Linux-x86_64.sh && \
 
 # Changes default shell to zsh
 printf "${Yellow}Changing default Shell for $USER.${END_COLOR}\n"
 printf "${YELLOW}"
 chsh -s /usr/bin/zsh
+printf "${END_COLOR}"
 printf "${CYAN}Congratulations! Your Orion Shell Environment is now installed.${END_COLOR}\n"
-printf "${YELLOW}Install miniconda python by running Miniconda3-latest-Linux-x86_64.sh.${END_COLOR}\n"
 printf "${CYAN}Log out and log back in to activate the shell.${END_COLOR}\n"
