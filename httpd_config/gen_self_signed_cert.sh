@@ -20,6 +20,6 @@ else
 fi
 
 printf "${YELLOW}Resetting Permissions.${END_COLOR}\n"
-sudo chown root:webadmins -R /etc/httpd/ssl
+sudo chown root:webadmins -R "$SSL_DIR"
 sudo chmod 664 "$SSL_DIR"/"$CERT_NAME".cer
 sudo chmod 664 "$SSL_DIR"/private/"$CERT_NAME".key
