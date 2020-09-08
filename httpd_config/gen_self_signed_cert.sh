@@ -16,10 +16,10 @@ if [[ "$1" == "" || "$1" == "--help" ]]; then
     exit 1
 else
     CERT_NAME=$1
-    sudo ${OPENSSL_CMD} req -x509 -newkey rsa:2048 -keyout $SSL_DIR/private/$CERT_NAME.key -nodes -out $SSL_DIR/$CERT_NAME.cer -days 365 -config $SSL_DIR/openssl.conf
+    sudo ${OPENSSL_CMD} req -x509 -newkey rsa:2048 -keyout "$SSL_DIR"/private/"$CERT_NAME".key -nodes -out "$SSL_DIR"/"$CERT_NAME".cer -days 365 -config "$SSL_DIR"/openssl.conf
 fi
 
 printf "${YELLOW}Resetting Permissions.${END_COLOR}\n"
 sudo chown root:webadmins -R /etc/httpd/ssl
 sudo chmod 664 $SSL_DIR/"$CERT_NAME".cer
-sudo chmod 664 $SSL_DIR/private/"$CERT_NAME.key
+sudo chmod 664 $SSL_DIR/private/"$CERT_NAME".key
