@@ -8,9 +8,9 @@ LIGHT_GRAY='\e[0;37m'
 END_COLOR='\e[0m'
 
 SSL_DIR="/etc/httpd/pki/ssl"
-OPENSSL_CMD="/usr/bin/openssl"
+OPENSSL_CMD=$(sudo command -v openssl)
 
-if [ "$1" == "" || "$1" == "--help" ]; then
+if [[ "$1" == "" || "$1" == "--help" ]]; then
     printf "${RED}Must specify cert name as a parameter.${END_COLOR}\n"
     printf "${YELLOW}Ex: gen_self_signed_cert.sh my_cert ${END_COLOR}\n"
     exit 1
@@ -21,5 +21,5 @@ fi
 
 printf "${YELLOW}Resetting Permissions.${END_COLOR}\n"
 sudo chown root:webadmins -R /etc/httpd/ssl
-# sudo chmod 664 $SSL_DIR/"$1".cer
-# sudo chmod 664 $SSL_DIR/private/"$1".key
+sudo chmod 664 $SSL_DIR/"$CERT_NAME".cer
+sudo chmod 664 $SSL_DIR/private/"$CERT_NAME.key
