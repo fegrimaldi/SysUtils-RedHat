@@ -8,7 +8,7 @@ Installs Red Hat Based Linux additional tools required for installation of a Web
 ### The Orion Shell
 Sets up the Orion Shell, based on ZSH. oh-my-zsh, spaceship prompt, plus tweaks your .zshrc profile with Orion Microtechnology shell tweaks.
     
-    etup_orion_shell.sh
+    setup_orion_shell.sh
 ### Apache and MySQL (MariaDb)
 Installs and configures basic settings of the Apache Web Server, including mod_security_crs which feature the OWASP Core Rule Set, then installs MariaDB (MySQL). 
     
