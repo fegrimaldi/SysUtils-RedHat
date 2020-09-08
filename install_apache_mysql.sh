@@ -69,7 +69,7 @@ sudo cp httpd_config/openssl.conf httpd_config/gen_csr.sh httpd_config/gen_self_
 if [ ! -d /etc/httpd/sites-available ]; then
     sudo mkdir -p /etc/httpd/sites-available
 fi
-sudo cp httpd_config/00-default.conf 00-default-ssl.conf /etc/httpd/sites-available/
+sudo cp httpd_config/00-default.conf httpd_config/00-default-ssl.conf /etc/httpd/sites-available/
 
 # Creates sites-enabled directory if it does not exist and enables virtual hosts
 if [ ! -d /etc/httpd/sites-enabled ]; then
