@@ -27,6 +27,7 @@ sudo ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa && \
 sudo ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N '' -t dsa && \
 sudo ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N '' -t ecdsa -b 521 && \
 
+# Generate User Keys
 printf "${YELLOW}Generating SSH Keys for User: $USER.${END_COLOR}\n"
 ssh-keygen
 

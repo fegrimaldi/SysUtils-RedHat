@@ -25,8 +25,9 @@ fi
 printf "${YELLOW}Activating Miniconda3.${END_COLOR}\n"
 source /usr/share/miniconda3/bin/activate && \
 
-printf "${YELLOW}Initializing zsh with conda.${END_COLOR}\n"
+printf "${YELLOW}Initializing zsh and bash with conda.${END_COLOR}\n"
 conda init zsh && \
+conda init bash && \
 
 printf "${YELLOW}Updating Conda and Python Versions.${END_COLOR}\n"
 conda update conda -y && \
